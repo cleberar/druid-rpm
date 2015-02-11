@@ -3,8 +3,8 @@
 %define _missing_doc_files_terminate_build 0
 
 Name: druid	
-Version: 0
-Release: 6.171
+Version: 0.6.171
+Release: 0.1
 Summary: Druid	
 Group: Applications/Internet
 License: GPL
@@ -57,6 +57,6 @@ exit 0
 
 
 %changelog
-* Mon Feb 02 2015 Cleber Rodrigues <cleber@cleberar.com> 0.6.160
+* Mon Feb 02 2015 Cleber Rodrigues <cleber@cleberar.com> 0.6.171-0.1
 - first
 

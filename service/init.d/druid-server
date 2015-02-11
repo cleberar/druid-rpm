@@ -23,8 +23,8 @@ start() {
         echo "Starting Druid server..."
     fi
 
-    DRUID_CMD="java $DRUID_HEAP_OPTS $DRUID_OPTS -Duser.timezone=UTC -Dfile.encoding=UTF-8 -classpath $CLASSPATH io.druid.cli.Main server realtime"
-    runuser --shell=/bin/bash --preserve-environment $DRUID_USER --command="$DRUID_CMD >> $LOG_DIR/druid-server.out 2>&1 &"
+    DRUID_CMD="java $DRUID_HEAP_OPTS $DRUID_OPTS $DRUID_SPEC_OPTS -Duser.timezone=UTC -Dfile.encoding=UTF-8 -classpath $CLASSPATH io.druid.cli.Main server realtime"
+    $DRUID_CMD >> $LOG_DIR/druid-server.out 2>&1 &
     if [ 0 == $? ]; then
         ps ax | grep druid | grep realtime | awk '{print $1}' > $PID_FILE
     fi
