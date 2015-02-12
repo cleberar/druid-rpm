@@ -9,7 +9,7 @@ Summary: Druid
 Group: Applications/Internet
 License: GPL
 URL: http://http://druid.io/
-Source: druid-%{version}.%{release}.tbz2
+Source: druid-%{version}.tbz2
 BuildRoot: %{_tmppath}/%{name}-root
 BuildArch: noarch
 AutoReqProv: no

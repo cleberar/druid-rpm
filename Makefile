@@ -1,7 +1,7 @@
 NAME=druid
-VERSION=0
-RELEASE=6.171
-DIST=$(NAME)-$(VERSION).$(RELEASE).tbz2
+VERSION=0.6.171
+RELEASE=0.1
+DIST=$(NAME)-$(VERSION).tbz2
 DEST=$(shell pwd)
 SOURCEDIR=$(DEST)
 BUILDDIR=$(DEST)
@@ -15,13 +15,13 @@ dist:
 	@printf " * criando pacote ... "
 	@date > dist.log
 	@rm -rf $(DEST)/$(NAME)-$(VERSION)
-	@wget http://static.druid.io/artifacts/releases/druid-services-$(VERSION).$(RELEASE)-bin.tar.gz
-	@tar -vzxf druid-services-$(VERSION).$(RELEASE)-bin.tar.gz
-	@cp -R druid-services-$(VERSION).$(RELEASE)/lib $(DEST)/$(NAME)-$(VERSION)
+	@wget -c http://static.druid.io/artifacts/releases/druid-services-$(VERSION)-bin.tar.gz
+	@tar -vzxf druid-services-$(VERSION)-bin.tar.gz
+	@cp -R druid-services-$(VERSION)/lib $(DEST)/$(NAME)-$(VERSION)
 	@cp -R service/* $(DEST)/$(NAME)-$(VERSION)/
 	@(cd $(DEST) ; tar  -jcvf $(DEST)/$(DIST) $(TAR_EXCLUDE) $(NAME)-$(VERSION))  >> dist.log 2>&1
 	@rm -rf $(DEST)/$(NAME)-$(VERSION)
-	@rm -rf druid-services-$(VERSION).$(RELEASE)
+	@rm -rf druid-services-$(VERSION)
 	@printf "feito.\n"
 
 prep: dist
