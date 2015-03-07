@@ -1,6 +1,5 @@
 NAME=druid
 VERSION=0.6.171
-RELEASE=0.1
 DIST=$(NAME)-$(VERSION).tbz2
 DEST=$(shell pwd)
 SOURCEDIR=$(DEST)
@@ -15,9 +14,10 @@ dist:
 	@printf " * criando pacote ... "
 	@date > dist.log
 	@rm -rf $(DEST)/$(NAME)-$(VERSION)
+	@mkdir $(DEST)/$(NAME)-$(VERSION)
 	@wget -c http://static.druid.io/artifacts/releases/druid-services-$(VERSION)-bin.tar.gz
 	@tar -vzxf druid-services-$(VERSION)-bin.tar.gz
-	@cp -R druid-services-$(VERSION)/lib $(DEST)/$(NAME)-$(VERSION)
+	@cp -R druid-services-$(VERSION)/lib/* $(DEST)/$(NAME)-$(VERSION)
 	@cp -R service/* $(DEST)/$(NAME)-$(VERSION)/
 	@(cd $(DEST) ; tar  -jcvf $(DEST)/$(DIST) $(TAR_EXCLUDE) $(NAME)-$(VERSION))  >> dist.log 2>&1
 	@rm -rf $(DEST)/$(NAME)-$(VERSION)

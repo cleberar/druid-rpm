@@ -4,7 +4,7 @@
 
 Name: druid	
 Version: 0.6.171
-Release: 0.1
+Release: 0.2
 Summary: Druid	
 Group: Applications/Internet
 License: GPL
@@ -41,7 +41,7 @@ exit 0
 %{__mkdir_p} %{buildroot}/var/run/druid
 
 %{__mv} init.d/druid-server %{buildroot}/etc/init.d
-%{__mv} env/druid-env.sh %{buildroot}/etc/druid/druid-env.sh
+%{__mv} config/* %{buildroot}/etc/druid/
 
 %files
 %defattr(-,druid,druid,755)
@@ -57,6 +57,9 @@ exit 0
 
 
 %changelog
+* Fri Mar 06 2015 Cleber Rodrigues <cleber@cleberar.com> 0.8.1.1-0.2
+- fix init script
+
 * Mon Feb 02 2015 Cleber Rodrigues <cleber@cleberar.com> 0.6.171-0.1
 - first
 
