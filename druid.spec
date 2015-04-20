@@ -3,8 +3,8 @@
 %define _missing_doc_files_terminate_build 0
 
 Name: druid	
-Version: 0.6.171
-Release: 0.2
+Version: 0.7.1.1
+Release: 0.1
 Summary: Druid	
 Group: Applications/Internet
 License: GPL
