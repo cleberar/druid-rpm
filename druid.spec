@@ -4,12 +4,14 @@
 
 Name: druid	
 Version: 0.6.171
-Release: 0.1
+Release: 0.2
 Summary: Druid	
 Group: Applications/Internet
 License: GPL
 URL: http://http://druid.io/
-Source: druid-%{version}.tbz2
+Source: http://static.druid.io/artifacts/releases/druid-services-%{version}-bin.tar.gz
+Source1: druid-env.sh.source
+Source2: druid-server.initscript.source
 BuildRoot: %{_tmppath}/%{name}-root
 BuildArch: noarch
 AutoReqProv: no
@@ -25,23 +27,25 @@ getent passwd druid >/dev/null || \
 exit 0
 
 %prep
-%setup -q
+%setup -q -n druid-services-%{version}
 
 %build
 
 %install
-
+# create directory skeleton
 %{__mkdir_p} %{buildroot}/usr/lib/druid
-%{__cp} -R * %{buildroot}/usr/lib/druid/
-
-# Copy the service file to the right places
-%{__mkdir_p} %{buildroot}/etc/init.d
+%{__mkdir_p} %{buildroot}/etc/rc.d/init.d
 %{__mkdir_p} %{buildroot}/etc/druid
 %{__mkdir_p} %{buildroot}/var/log/druid
 %{__mkdir_p} %{buildroot}/var/run/druid
 
-%{__mv} init.d/druid-server %{buildroot}/etc/init.d
-%{__mv} env/druid-env.sh %{buildroot}/etc/druid/druid-env.sh
+# install custom variables and initscript
+install -D -m 644 %{SOURCE1} %{buildroot}/etc/druid/druid-env.sh
+install -D -m 755 %{SOURCE2} %{buildroot}/etc/rc.d/init.d/druid-server
+
+# install druid libraries
+%{__cp} -Rv lib/* %{buildroot}/usr/lib/druid/
+
 
 %files
 %defattr(-,druid,druid,755)
@@ -49,7 +53,7 @@ exit 0
 %dir /var/log/druid 
 %dir /var/run/druid
 %defattr(755,root,root)
-/etc/init.d/druid-server
+/etc/rc.d/init.d/druid-server
 %defattr(644,root,root)
 /etc/druid/druid-env.sh
 
@@ -57,6 +61,10 @@ exit 0
 
 
 %changelog
+* Thu Jan 14 2016 Luciano Coutinho <lucianocoutinho@live.com> 0.6.171-0.2
+- fixed typos in initscript and updated the build process to preserve 
+  original source file as-is.
+
 * Mon Feb 02 2015 Cleber Rodrigues <cleber@cleberar.com> 0.6.171-0.1
 - first
 
