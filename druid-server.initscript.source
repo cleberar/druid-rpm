@@ -15,7 +15,7 @@ LOG_DIR="/var/log/druid"
 . $DRUID_CONF/druid-env.sh
 
 start() {
-    pid=$(ps ax | grep druid | grep realtime | awk '{print $1}')
+    pid=$(ps ax | grep druid | grep realtime | grep -v grep | awk '{print $1}')
     if [ "$pid" != "" ]; then
         echo "Druid server is already running."
         exit 0
@@ -25,10 +25,10 @@ start() {
 
     DRUID_CMD="java $DRUID_HEAP_OPTS $DRUID_OPTS $DRUID_SPEC_OPTS -Duser.timezone=UTC -Dfile.encoding=UTF-8 -classpath $CLASSPATH io.druid.cli.Main server realtime"
     $DRUID_CMD >> $LOG_DIR/druid-server.out 2>&1 &
-    if [ 0 == $? ]; then
-        ps ax | grep druid | grep realtime | awk '{print $1}' > $PID_FILE
-    fi
     RETVAL=$?
+    if [ $RETVAL == 0 ]; then
+        ps ax | grep druid | grep realtime | grep -v grep | awk '{print $1}' > $PID_FILE
+    fi
     status
     return $RETVAL
 }
@@ -46,7 +46,7 @@ stop() {
 }
 
 status() {
-    pid=$(cat $PID_FILE)
+    pid=$(< $PID_FILE)
     if [ "$pid" = '' ]; then
         return 0
     fi
